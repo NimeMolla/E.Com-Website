@@ -1,8 +1,5 @@
 import CartItem from "@/components/CartItem";
 import Wrapper from "@/components/Wrapper";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
 
 const Cart = () => {
   return (
@@ -60,7 +57,10 @@ const Cart = () => {
           {/* summery end */}
         </div>
         {/* cart content end */}
-        <div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-14">
+
+        {/* this part is for empty cart  */}
+
+        {/* <div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-14">
           <Image
             src="/empty-cart.jpg"
             width={300}
@@ -80,7 +80,7 @@ const Cart = () => {
           >
             Continue Shopping
           </Link>
-        </div>
+        </div> */}
       </Wrapper>
     </div>
   );
