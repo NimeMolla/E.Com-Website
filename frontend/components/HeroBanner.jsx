@@ -3,7 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 const HeroBanner = () => {
   return (
-    <div className="relative text-white tet-[20px] w-full max-w-[1360px] mx-auto">
+    <div className="relative text-white text-[20px] w-full max-w-[1360px] mx-auto">
       <Carousel
         autoPlay={true}
         infiniteLoop={true}
