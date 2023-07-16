@@ -1,17 +1,37 @@
 import ProductDetailsCarousel from "@/components/ProductDetailsCarousel";
 import RelatedProducts from "@/components/RelatedProducts";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Wrapper from "@/components/Wrapper";
+import { addToCart } from "@/store/cartSlice";
 import { fetchDataFromApi } from "@/utils/api";
 import { getDiscountPricePercentage } from "@/utils/helper";
 import { useState } from "react";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { useDispatch } from "react-redux";
+
 const ProductDetails = ({ product, products }) => {
   const [selectedSize, setSelectedSize] = useState();
   const [showError, setShowError] = useState(false);
-
+  const dispatch = useDispatch();
+  const notify=()=>{
+    toast.success('Success. Check your Cart', {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
+  }
   const p = product?.data?.[0]?.attributes;
   return (
     <div className="w-full md:py-20">
+      <ToastContainer />
       <Wrapper>
         <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
           {/* left colum start */}
@@ -23,7 +43,7 @@ const ProductDetails = ({ product, products }) => {
           {/* right colum start */}
           <div className="flex-[1] py-3 ">
             {/* product title */}
-            <div className="text-[34px] font-semibold mb-2">{p.name}</div>
+            <div className="text-[34px] font-semibold mb-2 leading-tight">{p.name}</div>
             {/* product subtitle */}
             <div className="text-lg font-semibold mb-5">{p.subtitle}</div>
             {/* product price */}
@@ -100,6 +120,9 @@ const ProductDetails = ({ product, products }) => {
                     block: "center",
                     behavior: "smooth",
                   });
+                } else {
+                  dispatch(addToCart({ ...product?.data?.[0], selectedSize ,oneQuantityPrice:p.price}));
+                  notify()
                 }
               }}
             >

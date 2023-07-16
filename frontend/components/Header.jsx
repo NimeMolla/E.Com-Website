@@ -11,12 +11,16 @@ import { BsCart } from "react-icons/bs";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { VscChromeClose } from "react-icons/vsc";
 import { fetchDataFromApi } from "@/utils/api";
+import { useSelector } from "react-redux";
+
 const Header = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [show, setShow] = useState("translate-y-0");
   const [lastScrollY, setLastScrollY] = useState(0);
   const [category, setCategory] = useState(null);
+
+  const { cartItems } = useSelector((state) => state.cart);
   const controlNabar = () => {
     if (window.scrollY > 200) {
       if (window.scrollY > lastScrollY && !mobileMenu) {
@@ -56,7 +60,11 @@ const Header = () => {
             className="w-[40px] md:w-[60px]"
           />
         </Link>
-        <Menu showCatMenu={showCatMenu} setShowCatMenu={setShowCatMenu} category={category}></Menu>
+        <Menu
+          showCatMenu={showCatMenu}
+          setShowCatMenu={setShowCatMenu}
+          category={category}
+        ></Menu>
         {mobileMenu && (
           <MenuMobile
             showCatMenu={showCatMenu}
@@ -79,9 +87,11 @@ const Header = () => {
           <Link href="/cart">
             <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center hover:bg-black/[0.05] cursor-pointer relative">
               <BsCart className="text-[15p] md:text-[20px]" />
-              <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                5
-              </div>
+              {cartItems.length > 0 && (
+                <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
+                  {cartItems.length}
+                </div>
+              )}
             </div>
           </Link>
           {/* Icon end */}
