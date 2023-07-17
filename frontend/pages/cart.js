@@ -2,10 +2,15 @@ import CartItem from "@/components/CartItem";
 import Wrapper from "@/components/Wrapper";
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
+
+  const subTotal = useMemo(() => {
+    return cartItems.reduce((total, val) => total + val.attributes.price, 0);
+  }, [cartItems]);
   return (
     <div className="w-full md:py-20">
       <Wrapper>
@@ -40,23 +45,22 @@ const Cart = () => {
                       SubTotal
                     </div>
                     <div className="text-md md:text-lg font-medium text-black">
-                      $ 599
+                      &#2547;{subTotal}
                     </div>
                   </div>
                   <div className="text-sm md:text-md py border-t mt-5">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Esse vero eligendi sed provident quas dolor accusantium
-                    repellat ducimus, explicabo expedita excepturi dolore
-                    asperiores similique natus consectetur. Quasi sint delectus
-                    magni expedita totam beatae optio ex facilis doloremque
-                    provident, omnis adipisci incidunt accusantium alias eos
-                    dolorem quibusdam ab est? Eligendi, aliquid!
+                    The subtotal reflects the total price of your order,
+                    including duties and taxes. before any applicable
+                    discount.It does not include delivery costs and
+                    international transaction fees.
                   </div>
                 </div>
                 {/* button start */}
-                <button className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75">
-                  Checkout
-                </button>
+                <Link href='success'>
+                  <button className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75">
+                    Checkout
+                  </button>
+                </Link>
                 {/* button end */}
               </div>
               {/* summery end */}
